@@ -19,6 +19,18 @@ var robots = [
         id: 5,
         name: 'John',
         email: 'kjelberg@gamil.com'
+    }, {
+        id: 6,
+        name: 'Morpheus',
+        email: 'kjelberg@gamil.com'
+    }, {
+        id: 7,
+        name: 'Ray',
+        email: 'kjelberg@gamil.com'
+    }, {
+        id: 8,
+        name: 'Johnny',
+        email: 'kjelberg@gamil.com'
     },
 ];
 export default robots;
