@@ -1,15 +1,26 @@
 import React, { Component } from 'react';
+import { connect } from "react-redux";
 import SearchBox from '../Components/SearchBox';
 import CardList from '../Components/CardList';
 import Scroll from '../Components/Scroll';
 import ErrorBoundary from '../Components/ErrorBoundary';
+import { setSearchField } from "../actions";
+
+const mapStateToProps = (state) => {
+    return {
+        searchField: state.searchField
+    }
+};
+const mapDispatchToProps = (dispatch) => ({
+    onSearchChange: (event) => dispatch(setSearchField(event.target.value))
+})
 
 class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
             robots: [],
-            searchfield: ''
+            // searchfield: ''
         }
     }
 
@@ -20,21 +31,22 @@ class App extends Component {
             .catch(error => console.log(error));
     }
     
-    onSearchChange = (event) => {
-        this.setState({searchfield: event.target.value});
-    }
+    // onSearchChange = (event) => {
+    //     this.setState({searchfield: event.target.value});
+    // }
 
     render() {
-        const {robots, searchfield} = this.state;
+        const {robots} = this.state;
+        const {searchField, onSearchChange} = this.props;
         const filteredRobots = robots.filter(robot => (
-            robot.name.toLowerCase().includes(searchfield.toLowerCase())
+            robot.name.toLowerCase().includes(searchField.toLowerCase())
         ))
         return !robots.length ? 
             <h1 className='tc red f2 ma2'>Loading...</h1>
             : (
                 <div className='tc' >
                     <h1 className='f1 light-green ttu sans-serif '>Robo Friends</h1>
-                    <SearchBox searchChange = {this.onSearchChange} />
+                    <SearchBox searchChange = {onSearchChange} />
                     <hr/>
                     <ErrorBoundary>
                         <Scroll>
@@ -48,4 +60,4 @@ class App extends Component {
 }
 
 
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);
